@@ -1,6 +1,4 @@
-## IntelliJ IDEA
-
-# General
+*.Identifier
 .idea/libraries/
 .idea/shelf/
 .idea/compiler.xml
@@ -10,32 +8,13 @@
 *.iws
 *.iml
 *.ipr
-
-# Editor-based HTTP Client requests
 .idea/httpRequests/
-
-# Datasource local storage ignored files
 .idea/dataSources/
 .idea/dataSources.local.xml
-
-## Linux
-
-# Temporary files
 *~
-
-## macOS
-
-# Files created by macOS Finder
 .DS_Store
-
-## Maven
 .mvn/wrapper/maven-wrapper.jar
 target/
-
-## Windows
-
-# Windows thumbnail cache files
 Thumbs.db
-
-# Folder config file
 [Dd]esktop.ini
+*.ps
