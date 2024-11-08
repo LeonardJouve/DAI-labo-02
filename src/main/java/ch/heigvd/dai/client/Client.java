@@ -8,6 +8,16 @@ import java.net.Socket;
 import java.util.concurrent.Callable;
 import picocli.CommandLine;
 
+public enum Command {
+  REGISTER,
+  LOGIN,
+  ADD,
+  GENERATE,
+  GET,
+  DISCONNECT,
+  QUIT,
+};
+
 @CommandLine.Command(name = "client", description = "Start the client part of the network game.")
 public class Client implements Callable<Integer> {
 
@@ -33,6 +43,28 @@ public class Client implements Callable<Integer> {
     ) {
       System.out.println("[Client] Connected to " + host + ":" + port);
       System.out.println();
+      boolean quit = false;
+
+      while (!quit) {
+        String line = in.readLine();
+        Command command = Command.valueOf(line.split(" ")[0]);
+
+        switch (command) {
+          case REGISTER:
+            break;
+          case LOGIN:
+            break;
+          case ADD:
+            break;
+          case GENERATE:
+            break;
+          case GET:
+              break;
+          case QUIT:
+            quit = true;
+            break;
+        }
+      }
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
