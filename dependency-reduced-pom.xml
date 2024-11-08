@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>ch.heigvd.dai</groupId>
-  <artifactId>java-tcp-programming</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <groupId>ch.heig.dai</groupId>
+  <artifactId>pass-secure</artifactId>
+  <version>1.0</version>
   <build>
     <plugins>
       <plugin>
@@ -14,7 +14,7 @@
           <execution>
             <phase>package</phase>
             <goals>
-              <goal>apply</goal>
+              <goal>check</goal>
             </goals>
           </execution>
         </executions>

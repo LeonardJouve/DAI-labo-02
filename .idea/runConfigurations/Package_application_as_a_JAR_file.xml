@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Package application as JAR file" type="MavenRunConfiguration" factoryName="Maven">
+  <configuration default="false" name="Package application as a JAR file" type="MavenRunConfiguration" factoryName="Maven">
     <MavenSettings>
       <option name="myGeneralSettings">
         <MavenGeneralSettings>
@@ -30,6 +30,8 @@
           </option>
           <option name="goals">
             <list>
+              <option value="spotless:apply" />
+              <option value="spotless:check" />
               <option value="dependency:go-offline" />
               <option value="clean" />
               <option value="compile" />
