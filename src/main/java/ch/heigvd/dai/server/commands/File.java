@@ -10,7 +10,7 @@
  * @author Ali Zoubir
  * @version 1.0
  */
-package ch.heigvd.dai;
+package ch.heigvd.dai.server.commands;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;

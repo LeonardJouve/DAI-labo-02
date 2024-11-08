@@ -11,13 +11,15 @@
  * @author Ali Zoubir
  * @version 1.0
  */
-package ch.heigvd.dai;
+package ch.heigvd.dai.server.commands;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.security.GeneralSecurityException;
 import java.util.Random;
 import java.util.concurrent.Callable;
+
+import ch.heigvd.dai.Cli;
 import picocli.CommandLine;
 
 /**

@@ -13,6 +13,12 @@
 package ch.heigvd.dai;
 
 import java.nio.file.Path;
+
+import ch.heigvd.dai.client.Client;
+import ch.heigvd.dai.server.Server;
+import ch.heigvd.dai.server.commands.Add;
+import ch.heigvd.dai.server.commands.Generate;
+import ch.heigvd.dai.server.commands.Get;
 import picocli.CommandLine;
 
 /**
@@ -20,6 +26,7 @@ import picocli.CommandLine;
  * various subcommands for generating, adding, and retrieving passwords. The scope and options of
  * the command are inherited by the subcommands.
  */
+/*
 @CommandLine.Command(
     name = "Pass-Secure",
     description =
@@ -33,6 +40,17 @@ import picocli.CommandLine;
     scope = CommandLine.ScopeType.INHERIT, // Inherit options and parameters in subcommands
     mixinStandardHelpOptions = true // Include standard help options like --help and --version
     )
+ */
+
+@CommandLine.Command(
+        description = "A small game to experiment with TCP.",
+        version = "1.0.0",
+        subcommands = {
+                Client.class,
+                Server.class,
+        },
+        scope = CommandLine.ScopeType.INHERIT,
+        mixinStandardHelpOptions = true)
 public class Cli {
 
   /**
@@ -51,7 +69,7 @@ public class Cli {
    *
    * @return The Path representing the location of the vault.
    */
-  Path getPath() {
+  public Path getPath() {
     return Path.of(path);
   }
 }
