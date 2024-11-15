@@ -25,16 +25,19 @@ public class Client implements Callable<Integer> {
 
   @Override
   public Integer call() {
-    try (Socket socket = new Socket(host, port);
-         Reader reader = new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8);
-         BufferedReader in = new BufferedReader(reader);
-         Writer writer = new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8);
-         BufferedWriter out = new BufferedWriter(writer)
+    try (
+        Reader keyboardReader = new InputStreamReader(System.in, StandardCharsets.UTF_8);
+        BufferedReader keyboardIn = new BufferedReader(keyboardReader);
+        Socket socket = new Socket(host, port);
+        Reader socketReader = new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8);
+        BufferedReader socketIn = new BufferedReader(socketReader);
+        Writer socketWriter = new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8);
+        BufferedWriter socketOut = new BufferedWriter(socketWriter)
     ) {
       System.out.println("[Client] Connected to " + host + ":" + port);
       System.out.println();
 
-      Repl.run(in, out);
+      Repl.run(keyboardIn, socketIn, socketOut);
     } catch (IOException e) {
       throw new UnsupportedOperationException(e);
     }

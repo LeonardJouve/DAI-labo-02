@@ -11,16 +11,27 @@ public class Command {
         this.arguments = arguments;
     }
 
-    public enum Type {
-        PING,
-        PONG,
-        REGISTER,
-        LOGIN,
-        ADD,
-        GENERATE,
-        GET,
-        DISCONNECT,
-        QUIT,
+    public enum Type { // Assigner a un string
+        PING("PING"),
+        PONG("PONG"),
+        REGISTER("REGISTER"),
+        LOGIN("LOGIN"),
+        ADD("ADD"),
+        GENERATE("GENERATE"),
+        GET("GET"),
+        DISCONNECT("DISCONNECT"),
+        QUIT("QUIT"),
+        OK("OK");
+
+        private final String type;
+        Type(final String type) {
+            this.type = type.toUpperCase();
+        }
+
+        @Override
+        public String toString() {
+            return type;
+        }
     };
 
     private static boolean isArgumentNameToken(String token) {
