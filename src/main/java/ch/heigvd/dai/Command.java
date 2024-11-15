@@ -1,6 +1,5 @@
 package ch.heigvd.dai;
 
-import java.text.ParseException;
 import java.util.HashMap;
 
 public class Command {
@@ -13,6 +12,8 @@ public class Command {
     }
 
     public enum Type {
+        PING,
+        PONG,
         REGISTER,
         LOGIN,
         ADD,

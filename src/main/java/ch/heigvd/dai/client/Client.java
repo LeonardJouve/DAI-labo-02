@@ -33,30 +33,8 @@ public class Client implements Callable<Integer> {
     ) {
       System.out.println("[Client] Connected to " + host + ":" + port);
       System.out.println();
-      boolean quit = false;
 
-      while (!quit) {
-        String line = in.readLine();
-        Command command = Command.parse(line);
-
-        switch (command.getType()) {
-          case Command.Type.REGISTER:
-            break;
-          case Command.Type.LOGIN:
-            break;
-          case Command.Type.ADD:
-            break;
-          case Command.Type.GENERATE:
-            break;
-          case Command.Type.GET:
-              break;
-          case Command.Type.DISCONNECT:
-            break;
-          case Command.Type.QUIT:
-            quit = true;
-            break;
-        }
-      }
+      Repl.run(in, out);
     } catch (IOException e) {
       throw new UnsupportedOperationException(e);
     }
