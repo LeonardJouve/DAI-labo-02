@@ -5,7 +5,7 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.Callable;
 
-import ch.heigvd.dai.Command;
+import ch.heigvd.dai.PassSecureException;
 import picocli.CommandLine;
 
 @CommandLine.Command(name = "client", description = "Start the client part of the network game.")
@@ -38,6 +38,8 @@ public class Client implements Callable<Integer> {
       System.out.println();
 
       Repl.run(keyboardIn, socketIn, socketOut);
+    } catch (PassSecureException e) {
+      System.out.println(e.getMessage());
     } catch (IOException e) {
       throw new UnsupportedOperationException(e);
     }

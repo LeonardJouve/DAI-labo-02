@@ -6,6 +6,7 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.Callable;
 
+import ch.heigvd.dai.PassSecureException;
 import picocli.CommandLine;
 
 @CommandLine.Command(name = "server", description = "Start the server part of the network game.")
@@ -38,6 +39,8 @@ public class Server implements Callable<Integer> {
           Repl.run(socket, in, out);
 
           System.out.println("[Server] Closing connection");
+        } catch (PassSecureException e) {
+          System.out.println(e.getMessage());
         } catch (IOException e) {
           System.out.println("[Server] IO exception: " + e);
         }

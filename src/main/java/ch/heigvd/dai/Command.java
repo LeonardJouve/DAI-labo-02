@@ -1,12 +1,17 @@
 package ch.heigvd.dai;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class Command {
     private final Type type;
     private final HashMap<String, String> arguments;
 
-    private Command(Type type, HashMap<String, String> arguments) {
+    public Command(Type type) {
+        this(type, new HashMap<>());
+    }
+
+    public Command(Type type, HashMap<String, String> arguments) {
         this.type = type;
         this.arguments = arguments;
     }
@@ -24,7 +29,7 @@ public class Command {
         OK("OK");
 
         private final String type;
-        Type(final String type) {
+        Type(String type) {
             this.type = type.toUpperCase();
         }
 
@@ -74,5 +79,19 @@ public class Command {
 
     public Type getType() {
         return type;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(type);
+        for (Map.Entry<String, String> entry : arguments.entrySet()) {
+            sb.append(" ");
+            sb.append(entry.getKey());
+            sb.append(" ");
+            sb.append(entry.getValue());
+        }
+
+        return sb.toString();
     }
 }
