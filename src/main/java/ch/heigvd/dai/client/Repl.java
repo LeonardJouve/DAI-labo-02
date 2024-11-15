@@ -33,6 +33,7 @@ public class Repl {
                 switch (command.getType()) {
                     case Command.Type.PING:
                         sendCommand(socketIn, socketOut, new Command(Command.Type.PING));
+                        System.out.println("PONG");
                         break;
                     case Command.Type.REGISTER:
                         break;

@@ -10,7 +10,9 @@ public class PassSecureException extends Exception {
     public enum Type {
         BAD_RESPONSE("bad response"),
         INVALID_ARGUMENT("invalid argument"),
-        SOCKET_EXCEPTION("socket exception");
+        SOCKET_EXCEPTION("socket exception"),
+        FILE_EXCEPTION("file reading/writing error"),
+        ENCRYPTION_EXCEPTION("encryption error");
 
         private final String type;
         Type(String value) {

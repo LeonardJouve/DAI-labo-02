@@ -2,6 +2,8 @@ package ch.heigvd.dai.server;
 
 import ch.heigvd.dai.Command;
 import ch.heigvd.dai.PassSecureException;
+import ch.heigvd.dai.server.State;
+import ch.heigvd.dai.server.commands.Login;
 
 import java.net.Socket;
 import java.io.BufferedReader;
@@ -19,6 +21,8 @@ public class Repl {
     }
 
     public static void run(Socket socket, BufferedReader socketIn, BufferedWriter socketOut) throws PassSecureException {
+        State state = new State();
+
         try {
             while (!socket.isClosed()) {
                 String line = socketIn.readLine();
@@ -35,6 +39,11 @@ public class Repl {
                     case Command.Type.REGISTER:
                         break;
                     case Command.Type.LOGIN:
+                        Login.login(state, command);
+                        if (!state.isLoggedIn()) {
+                            sendCommand(socketOut, new Command(Command.Type.NOK));
+                            continue;
+                        }
                         break;
                     case Command.Type.ADD:
                         break;

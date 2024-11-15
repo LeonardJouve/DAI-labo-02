@@ -26,7 +26,8 @@ public class Command {
         GET("GET"),
         DISCONNECT("DISCONNECT"),
         QUIT("QUIT"),
-        OK("OK");
+        OK("OK"),
+        NOK("NOK");
 
         private final String type;
         Type(String type) {
