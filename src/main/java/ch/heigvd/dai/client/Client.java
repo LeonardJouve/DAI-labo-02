@@ -2,21 +2,11 @@ package ch.heigvd.dai.client;
 
 import java.io.*;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
-import java.net.Socket;
 import java.util.concurrent.Callable;
-import picocli.CommandLine;
 
-public enum Command {
-  REGISTER,
-  LOGIN,
-  ADD,
-  GENERATE,
-  GET,
-  DISCONNECT,
-  QUIT,
-};
+import ch.heigvd.dai.Command;
+import picocli.CommandLine;
 
 @CommandLine.Command(name = "client", description = "Start the client part of the network game.")
 public class Client implements Callable<Integer> {
@@ -47,26 +37,28 @@ public class Client implements Callable<Integer> {
 
       while (!quit) {
         String line = in.readLine();
-        Command command = Command.valueOf(line.split(" ")[0]);
+        Command command = Command.parse(line);
 
-        switch (command) {
-          case REGISTER:
+        switch (command.getType()) {
+          case Command.Type.REGISTER:
             break;
-          case LOGIN:
+          case Command.Type.LOGIN:
             break;
-          case ADD:
+          case Command.Type.ADD:
             break;
-          case GENERATE:
+          case Command.Type.GENERATE:
             break;
-          case GET:
+          case Command.Type.GET:
               break;
-          case QUIT:
+          case Command.Type.DISCONNECT:
+            break;
+          case Command.Type.QUIT:
             quit = true;
             break;
         }
       }
     } catch (IOException e) {
-      throw new RuntimeException(e);
+      throw new UnsupportedOperationException(e);
     }
 
     return 0;
