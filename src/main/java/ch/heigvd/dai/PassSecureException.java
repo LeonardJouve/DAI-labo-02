@@ -11,8 +11,11 @@ public class PassSecureException extends Exception {
         BAD_RESPONSE("bad response"),
         INVALID_ARGUMENT("invalid argument"),
         SOCKET_EXCEPTION("socket exception"),
-        FILE_EXCEPTION("file reading/writing error"),
-        ENCRYPTION_EXCEPTION("encryption error");
+        USER_ALREADY_EXISTS("user already exists"),
+        INVALID_CREDENTIALS("invalid credentials"),
+        USER_ALREADY_CONNECTED("user already connected"),
+        SERVER_ERROR("server error"),
+        UNAUTHORIZED("unauthorized");
 
         private final String type;
         Type(String value) {

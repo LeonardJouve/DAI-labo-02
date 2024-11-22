@@ -6,20 +6,25 @@ import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.Callable;
 
+import ch.heigvd.dai.Cli;
 import ch.heigvd.dai.PassSecureException;
 import picocli.CommandLine;
 
 @CommandLine.Command(name = "server", description = "Start the server part of the network game.")
 public class Server implements Callable<Integer> {
+  @CommandLine.ParentCommand
+  private Cli parent;
 
   @CommandLine.Option(
       names = {"-p", "--port"},
       description = "Port to use (default: ${DEFAULT-VALUE}).",
       defaultValue = "6433")
-  protected int port;
+  private int port;
 
   @Override
   public Integer call() {
+    State.setVault(parent.getPath());
+
     try (ServerSocket serverSocket = new ServerSocket(port)) {
       System.out.println("[Server] Listening on port " + port);
 

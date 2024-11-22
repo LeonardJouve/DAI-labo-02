@@ -15,13 +15,13 @@ public class Client implements Callable<Integer> {
       names = {"-H", "--host"},
       description = "Host to connect to.",
       required = true)
-  protected String host;
+  private String host;
 
   @CommandLine.Option(
       names = {"-p", "--port"},
       description = "Port to use (default: ${DEFAULT-VALUE}).",
       defaultValue = "6433")
-  protected int port;
+  private int port;
 
   @Override
   public Integer call() {

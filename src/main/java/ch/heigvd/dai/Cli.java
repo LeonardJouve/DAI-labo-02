@@ -52,7 +52,6 @@ import picocli.CommandLine;
         scope = CommandLine.ScopeType.INHERIT,
         mixinStandardHelpOptions = true)
 public class Cli {
-
   /**
    * The path to the vault where the passwords are stored. If not specified, it defaults to the
    * current directory.
