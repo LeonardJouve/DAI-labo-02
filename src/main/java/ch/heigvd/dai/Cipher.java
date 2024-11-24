@@ -61,7 +61,7 @@ public class Cipher {
         return Base64.getEncoder().encodeToString(combined);
     }
 
-    public static String hash(String toHash) throws NoSuchAlgorithmException {
+    public static String hash(String toHash) throws GeneralSecurityException {
         MessageDigest md = MessageDigest.getInstance("SHA-512");
         md.update(SALT);
 

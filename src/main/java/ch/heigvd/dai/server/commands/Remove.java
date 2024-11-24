@@ -4,9 +4,9 @@ import ch.heigvd.dai.Command;
 import ch.heigvd.dai.PassSecureException;
 import ch.heigvd.dai.server.State;
 
-public class Get {
-    public static String get(State state, Command command) throws PassSecureException {
-        if (state == null || command == null || command.getType() != Command.Type.GET)
+public class Remove {
+    public static void remove(State state, Command command) throws PassSecureException {
+        if (state == null || command == null || command.getType() != Command.Type.REMOVE)
             throw new PassSecureException(PassSecureException.Type.INVALID_ARGUMENT);
 
         String name = command.getString("name");
@@ -14,6 +14,6 @@ public class Get {
         if (name == null || name.isEmpty())
             throw new PassSecureException(PassSecureException.Type.INVALID_ARGUMENT);
 
-        return state.getVaultEntry(name);
+        state.removeVaultEntry(name);
     }
 }
