@@ -1,6 +1,5 @@
 package ch.heigvd.dai.client;
 
-import ch.heigvd.dai.PassSecureException;
 import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
@@ -39,8 +38,6 @@ public class Client implements Callable<Integer> {
       Repl.run(keyboardIn, socketIn, socketOut);
 
       System.out.println("[Client] Closing connection");
-    } catch (PassSecureException e) {
-      System.out.println(e.getMessage());
     } catch (IOException e) {
       throw new UnsupportedOperationException(e);
     }
