@@ -1,5 +1,7 @@
 package ch.heigvd.dai;
 
+import jdk.jshell.EvalException;
+
 import java.security.GeneralSecurityException;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,23 +23,24 @@ public class Command {
     this.arguments = arguments;
   }
 
-  public enum Type { // Assigner a un string
+  public enum Type {
     PING("PING"),
-    PONG("PONG"),
     REGISTER("REGISTER"),
     LOGIN("LOGIN"),
     ADD("ADD"),
     GENERATE("GENERATE"),
     GET("GET"),
+    REMOVE("REMOVE"),
     DISCONNECT("DISCONNECT"),
     QUIT("QUIT"),
     OK("OK"),
-    NOK("NOK");
+    NOK("NOK"),
+    HELP("HELP");
 
     private final String type;
 
     Type(String type) {
-      this.type = type.toUpperCase();
+      this.type = type;
     }
 
     @Override
@@ -54,16 +57,22 @@ public class Command {
     String[] tokens = command.split(" ");
     if (tokens.length == 0) throw new PassSecureException(PassSecureException.Type.INVALID_ARGUMENT);
 
-    final Type type = Type.valueOf(tokens[0]);
+    Type type;
+    try {
+      type = Type.valueOf(tokens[0]);
+    } catch (IllegalArgumentException e) {
+      throw new PassSecureException(PassSecureException.Type.INVALID_COMMAND);
+    }
     HashMap<String, String> arguments = new HashMap<>();
 
-    for (int i = 0; i < tokens.length - 1; ++i) {
+    for (int i = 0; i < tokens.length; ++i) {
       String token = tokens[i];
       if (!isArgumentNameToken(token)) continue;
 
       String argument = token.substring(2);
       if (i + 1 < tokens.length && !isArgumentNameToken(tokens[i + 1])) {
         arguments.put(argument, tokens[i + 1]);
+        ++i;
       } else {
         arguments.put(argument, Boolean.valueOf(true).toString());
       }
@@ -86,26 +95,34 @@ public class Command {
     }
   }
 
-  public void decrypt() throws PassSecureException {
-    if (!arguments.containsKey(DECRYPTION_PASSWORD_ARGUMENT) || !arguments.containsKey(PASSWORD_ARGUMENT)) return;
+  public String decrypt(String password) throws PassSecureException {
+    if (!arguments.containsKey(DECRYPTION_PASSWORD_ARGUMENT)) return password;
 
     String decryptionPassword = arguments.get(DECRYPTION_PASSWORD_ARGUMENT);
-    String password = arguments.get(PASSWORD_ARGUMENT);
 
     try {
-      String decryptedPassword = Cipher.decrypt(password, decryptionPassword);
-      arguments.replace(PASSWORD_ARGUMENT, decryptedPassword);
+      return Cipher.decrypt(password, decryptionPassword);
     } catch (GeneralSecurityException e) {
       throw new PassSecureException(PassSecureException.Type.CIPHER_ERROR);
     }
   }
 
-  public int getInt(String name) throws NumberFormatException {
-    return Integer.parseInt(arguments.get(name));
+  public int getInt(String name) {
+    String value = arguments.get(name);
+    if (value == null) return 0;
+
+    try {
+      return Integer.parseInt(value);
+    } catch (NumberFormatException e) {
+      return 0;
+    }
   }
 
   public boolean getBoolean(String name) {
-    return Boolean.parseBoolean(arguments.get(name));
+    String value = arguments.get(name);
+    if (value == null) return false;
+
+    return Boolean.parseBoolean(value);
   }
 
   public String getString(String name) {
@@ -114,6 +131,10 @@ public class Command {
 
   public Type getType() {
     return type;
+  }
+
+  public HashMap<String, String> getArguments() {
+    return arguments;
   }
 
   @Override

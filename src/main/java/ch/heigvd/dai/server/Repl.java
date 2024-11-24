@@ -2,8 +2,8 @@ package ch.heigvd.dai.server;
 
 import ch.heigvd.dai.Command;
 import ch.heigvd.dai.PassSecureException;
-import ch.heigvd.dai.server.commands.Login;
-import ch.heigvd.dai.server.commands.Register;
+import ch.heigvd.dai.server.commands.*;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -31,8 +31,6 @@ public class Repl {
       try {
         Command command = Command.parse(line);
         switch (command.getType()) {
-          case Command.Type.PING:
-            break;
           case Command.Type.REGISTER:
             Register.register(state, command);
             break;
@@ -40,10 +38,16 @@ public class Repl {
             Login.login(state, command);
             break;
           case Command.Type.ADD:
-            break;
-          case Command.Type.GENERATE:
+            Add.add(state, command);
             break;
           case Command.Type.GET:
+            String password = Get.get(state, command);
+            sendCommand(socketOut, new Command(Command.Type.OK));
+            socketOut.write(password + "\n");
+            socketOut.flush();
+            continue;
+          case Command.Type.REMOVE:
+            Remove.remove(state, command);
             break;
           case Command.Type.DISCONNECT:
             state.disconnect();

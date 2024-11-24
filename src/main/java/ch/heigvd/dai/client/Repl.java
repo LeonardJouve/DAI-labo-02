@@ -2,9 +2,13 @@ package ch.heigvd.dai.client;
 
 import ch.heigvd.dai.Command;
 import ch.heigvd.dai.PassSecureException;
+import ch.heigvd.dai.client.commands.Generate;
+import ch.heigvd.dai.client.commands.Help;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.util.HashMap;
 
 public class Repl {
   private static void sendCommand(
@@ -44,14 +48,27 @@ public class Repl {
             sendCommand(socketIn, socketOut, command);
             System.out.println("PONG");
             break;
-          case Command.Type.REGISTER, Command.Type.LOGIN, Command.Type.DISCONNECT:
+          case Command.Type.REGISTER, Command.Type.LOGIN, Command.Type.DISCONNECT, Command.Type.ADD, Command.Type.REMOVE:
             sendCommand(socketIn, socketOut, command);
             break;
-          case Command.Type.ADD:
+          case Command.Type.GET: {
+            sendCommand(socketIn, socketOut, command);
+            String password = command.decrypt(socketIn.readLine());
+            System.out.println("Password : " + password);
             break;
-          case Command.Type.GENERATE:
+          }
+          case Command.Type.GENERATE: {
+            String password = Generate.generate(command);
+            System.out.println("Password : " + password);
+            if (command.getBoolean("store")) {
+              HashMap<String, String> arguments = command.getArguments();
+              arguments.put("password", password);
+              sendCommand(socketIn, socketOut, new Command(Command.Type.ADD, arguments));
+            }
             break;
-          case Command.Type.GET:
+          }
+          case Command.Type.HELP:
+            Help.help();
             break;
           case Command.Type.QUIT:
             quit = true;
