@@ -42,14 +42,12 @@ public class Server implements Callable<Integer> {
           Repl.run(socket, in, out);
 
           System.out.println("[Server] Closing connection");
-        } catch (PassSecureException e) {
-          System.out.println(e.getMessage());
-        } catch (IOException e) {
-          System.out.println("[Server] IO exception: " + e);
+        } catch (PassSecureException | IOException e) {
+          System.out.println("[Server] exception: " + e.getMessage());
         }
       }
     } catch (IOException e) {
-      System.out.println("[Server] IO exception: " + e);
+      System.out.println("[Server] exception: " + e);
     }
 
     return 0;

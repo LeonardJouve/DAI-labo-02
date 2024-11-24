@@ -1,9 +1,14 @@
 package ch.heigvd.dai;
 
+import java.security.GeneralSecurityException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Command {
+  private final static String ENCRYPTION_PASSWORD_ARGUMENT = "encryptionPassword";
+  private final static String DECRYPTION_PASSWORD_ARGUMENT = "decryptionPassword";
+  private final static String PASSWORD_ARGUMENT = "password";
+
   private final Type type;
   private final HashMap<String, String> arguments;
 
@@ -45,9 +50,9 @@ public class Command {
     return token.startsWith("--");
   }
 
-  public static Command parse(String command) throws IllegalArgumentException {
+  public static Command parse(String command) throws PassSecureException {
     String[] tokens = command.split(" ");
-    if (tokens.length == 0) throw new IllegalArgumentException("Invalid command.");
+    if (tokens.length == 0) throw new PassSecureException(PassSecureException.Type.INVALID_ARGUMENT);
 
     final Type type = Type.valueOf(tokens[0]);
     HashMap<String, String> arguments = new HashMap<>();
@@ -58,7 +63,6 @@ public class Command {
 
       String argument = token.substring(2);
       if (i + 1 < tokens.length && !isArgumentNameToken(tokens[i + 1])) {
-        System.out.println("parse: " + argument + tokens[i + 1]);
         arguments.put(argument, tokens[i + 1]);
       } else {
         arguments.put(argument, Boolean.valueOf(true).toString());
@@ -66,6 +70,34 @@ public class Command {
     }
 
     return new Command(type, arguments);
+  }
+
+  public void encrypt() throws PassSecureException {
+    if (!arguments.containsKey(ENCRYPTION_PASSWORD_ARGUMENT) || !arguments.containsKey(PASSWORD_ARGUMENT)) return;
+
+    String encryptionPassword = arguments.get(ENCRYPTION_PASSWORD_ARGUMENT);
+    String password = arguments.get(PASSWORD_ARGUMENT);
+
+    try {
+      String encryptedPassword = Cipher.encrypt(password, encryptionPassword);
+      arguments.replace(PASSWORD_ARGUMENT, encryptedPassword);
+    } catch (GeneralSecurityException e) {
+      throw new PassSecureException(PassSecureException.Type.CIPHER_ERROR);
+    }
+  }
+
+  public void decrypt() throws PassSecureException {
+    if (!arguments.containsKey(DECRYPTION_PASSWORD_ARGUMENT) || !arguments.containsKey(PASSWORD_ARGUMENT)) return;
+
+    String decryptionPassword = arguments.get(DECRYPTION_PASSWORD_ARGUMENT);
+    String password = arguments.get(PASSWORD_ARGUMENT);
+
+    try {
+      String decryptedPassword = Cipher.decrypt(password, decryptionPassword);
+      arguments.replace(PASSWORD_ARGUMENT, decryptedPassword);
+    } catch (GeneralSecurityException e) {
+      throw new PassSecureException(PassSecureException.Type.CIPHER_ERROR);
+    }
   }
 
   public int getInt(String name) throws NumberFormatException {
@@ -89,6 +121,8 @@ public class Command {
     StringBuilder sb = new StringBuilder();
     sb.append(type);
     for (Map.Entry<String, String> entry : arguments.entrySet()) {
+      if (entry.getKey().equals(ENCRYPTION_PASSWORD_ARGUMENT) || entry.getKey().equals(DECRYPTION_PASSWORD_ARGUMENT)) continue;
+
       sb.append(" --");
       sb.append(entry.getKey());
       sb.append(" ");

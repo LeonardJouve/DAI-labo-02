@@ -1,6 +1,6 @@
 package ch.heigvd.dai.server;
 
-import ch.heigvd.dai.Hasher;
+import ch.heigvd.dai.Cipher;
 import ch.heigvd.dai.PassSecureException;
 import ch.heigvd.dai.server.commands.File;
 import java.io.IOException;
@@ -8,16 +8,14 @@ import java.nio.file.Path;
 import java.security.NoSuchAlgorithmException;
 
 public class State {
-  private static Path vaultPath = null;
+  private static Path vaultPath = Path.of("./");
   private static final String HASH_EXTENSION = ".hs";
   private boolean isLoggedIn;
   private String username;
 
-  public State() throws PassSecureException {
+  public State() {
     this.isLoggedIn = false;
     this.username = null;
-
-    if (vaultPath == null) throw new PassSecureException(PassSecureException.Type.SERVER_ERROR);
   }
 
   public Path getUserVault() throws PassSecureException {
@@ -35,20 +33,17 @@ public class State {
 
   public void register(String username, String password) throws PassSecureException {
     if (getVaultForUser(username).toFile().isDirectory()) {
-      System.out.println("user already exists");
       throw new PassSecureException(PassSecureException.Type.USER_ALREADY_EXISTS);
     }
 
     if (!getVaultForUser(username).toFile().mkdirs()) {
-      System.out.println("directory not created");
       throw new PassSecureException(PassSecureException.Type.SERVER_ERROR);
     }
 
     try {
-      String passwordHash = Hasher.hash(password);
+      String passwordHash = Cipher.hash(password);
       File.write(getVaultForUser(username).resolve(username + HASH_EXTENSION), passwordHash);
     } catch (NoSuchAlgorithmException | IOException e) {
-      System.out.println("io exception");
       throw new PassSecureException(PassSecureException.Type.SERVER_ERROR);
     }
 
@@ -62,7 +57,7 @@ public class State {
       throw new PassSecureException(PassSecureException.Type.INVALID_CREDENTIALS);
 
     try {
-      String passwordHash = Hasher.hash(password);
+      String passwordHash = Cipher.hash(password);
       String storedHash = File.read(getVaultForUser(username).resolve(username + HASH_EXTENSION));
 
       if (!storedHash.equals(passwordHash))

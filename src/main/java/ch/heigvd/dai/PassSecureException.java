@@ -15,7 +15,8 @@ public class PassSecureException extends Exception {
     INVALID_CREDENTIALS("invalid_credentials"),
     USER_ALREADY_CONNECTED("user_already_connected"),
     SERVER_ERROR("server_error"),
-    UNAUTHORIZED("unauthorized");
+    UNAUTHORIZED("unauthorized"),
+    CIPHER_ERROR("cipher_error"),;
 
     private final String type;
 

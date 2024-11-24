@@ -11,10 +11,10 @@ public class Repl {
       BufferedReader socketIn, BufferedWriter socketOut, Command command)
       throws PassSecureException {
     try {
+      command.encrypt();
       socketOut.write(command + "\n");
       socketOut.flush();
       String response = socketIn.readLine();
-      System.out.println(response);
       if (response == null || !isCommandAccepted(Command.parse(response))) {
         throw new PassSecureException(PassSecureException.Type.BAD_RESPONSE);
       }
@@ -30,18 +30,18 @@ public class Repl {
     return command.getType() == Command.Type.OK;
   }
 
-  public static void run(
-      BufferedReader keyboardIn, BufferedReader socketIn, BufferedWriter socketOut)
-      throws PassSecureException {
+  public static void run(BufferedReader keyboardIn, BufferedReader socketIn, BufferedWriter socketOut) throws IOException {
     boolean quit = false;
-    try {
-      while (!quit) {
-        String line = keyboardIn.readLine();
+    while (!quit) {
+      String line = keyboardIn.readLine();
+      if (line == null) break;
+
+      try {
         Command command = Command.parse(line);
 
         switch (command.getType()) {
           case Command.Type.PING:
-            sendCommand(socketIn, socketOut, new Command(Command.Type.PING));
+            sendCommand(socketIn, socketOut, command);
             System.out.println("PONG");
             break;
           case Command.Type.REGISTER, Command.Type.LOGIN, Command.Type.DISCONNECT:
@@ -54,13 +54,12 @@ public class Repl {
           case Command.Type.GET:
             break;
           case Command.Type.QUIT:
-            sendCommand(socketIn, socketOut, command);
             quit = true;
             break;
         }
+      } catch (PassSecureException e) {
+        System.err.println(e.getMessage());
       }
-    } catch (IOException e) {
-      throw new PassSecureException(PassSecureException.Type.SOCKET_EXCEPTION);
     }
   }
 }
