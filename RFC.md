@@ -104,6 +104,9 @@ Les messages sont échangés sous la forme de lignes de texte terminées par un 
 **Serveur** → `OK`  
 **Serveur** → `rFMQGZ5LWQUCpCmNjmgrHYNPZrGktjm5dxZbmNg2hfs=`  
 
+**Client** → `GET --name ../Leonard/github`  
+**Serveur** → `NOK unauthorized``   
+
 **Client** → `DISCONNECT`  
 **Serveur** → `OK`  
 
