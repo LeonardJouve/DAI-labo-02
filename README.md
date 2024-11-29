@@ -14,6 +14,18 @@
 - **Suppression de Mots de Passe** : Les entrées inutiles peuvent être supprimées du coffre.
 - **Déconnexion et Fermeture** : Permet de mettre fin à la session de manière sécurisée.
 
+## Docker
+
+1. Lancer le serveur
+```bash
+docker run ghcr.io/leonardjouve/pass-secure server
+```
+
+2. Lancer le client 
+```bash
+docker run ghcr.io/leonardjouve/pass-secure client
+```
+
 ## Installation
 
 1. Clonez le dépôt :
