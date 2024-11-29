@@ -29,12 +29,18 @@
 
 3. Lancez le serveur :
    ```bash
-   java -cp target/pass-secure.jar ch.heigvd.dai.server.Server
+   java -jar target/pass-secure-1.0.jar --path ./serverVault/ server
    ```
 
 4. Lancez le client :
    ```bash
-   java -cp target/pass-secure.jar ch.heigvd.dai.client.Client
+   java -jar target/pass-secure-1.0.jar client -H localhost
+   ```
+
+5. Obtenez de l'aide ou affichez la version :
+   ```bash
+   java -jar target/pass-secure-1.0.jar --help
+   java -jar target/pass-secure-1.0.jar --version
    ```
 
 ## Usage
