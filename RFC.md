@@ -2,7 +2,7 @@
 
 ## 1. Overview
 
-Le gestionnaire de mots de passe TCP permet à un client de gérer ses mots de passe en interagissant avec un serveur via un protocole personnalisé. Les fonctionnalités incluent l'enregistrement, l'authentification, l'ajout, la récupération, la suppression et la déconnexion. Toutes les communications entre le client et le serveur utilisent des commandes structurées dans un environnement sécurisé.
+Le gestionnaire de mots de passe Pass-secure permet à un client de gérer ses mots de passe en interagissant avec un serveur via un protocole personnalisé. Les fonctionnalités incluent l'enregistrement, l'authentification, l'ajout, la récupération, la suppression et la déconnexion. Toutes les communications entre le client et le serveur utilisent des commandes structurées dans un environnement sécurisé.
 
 ### Objectifs :
 - Permettre la gestion distribuée de mots de passe.
@@ -102,7 +102,7 @@ Les messages sont échangés sous la forme de lignes de texte terminées par un 
 
 **Client** → `GET --name github`  
 **Serveur** → `OK`  
-**Serveur** → `QUtTZGFzbmRhc2puZGphc25kYX`  
+**Serveur** → `rFMQGZ5LWQUCpCmNjmgrHYNPZrGktjm5dxZbmNg2hfs=`  
 
 **Client** → `DISCONNECT`  
 **Serveur** → `OK`  
