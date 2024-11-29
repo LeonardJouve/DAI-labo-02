@@ -23,7 +23,7 @@ docker run ghcr.io/leonardjouve/pass-secure server
 
 2. Lancer le client 
 ```bash
-docker run ghcr.io/leonardjouve/pass-secure client
+docker run -it ghcr.io/leonardjouve/pass-secure client
 ```
 
 ## Installation
