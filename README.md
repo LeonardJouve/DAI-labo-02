@@ -71,6 +71,7 @@ L'application fonctionne avec un protocole TCP personnalisé. Voici les commande
 | `DISCONNECT`    | Déconnecter l'utilisateur du serveur.                                      |
 | `PING`          | Vérifier la connectivité avec le serveur.                                  |
 | `QUIT`          | Fermer la connexion (client uniquement).                                   |
+| `GENERATE`          | Creer un mot de passe sécurisé. (requiert `--name` et `--length`) (optionnal `--special` `--store`).                                   |
 
 ### Exemple de session client-serveur
 
@@ -100,7 +101,7 @@ L'application fonctionne avec un protocole TCP personnalisé. Voici les commande
 **Serveur** → `OK`
 
 ### Exemple de génération de mot de passe :
-**Client** → `--generate --name twitter --length 12 --special true --store true`  
+**Client** → `GENERATE --name twitter --length 12 --special true --store true`  
 **Serveur** → `OK`  
 **Serveur** → `RandomPassword123!`
 
