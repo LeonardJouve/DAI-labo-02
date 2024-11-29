@@ -45,14 +45,14 @@ L'application fonctionne avec un protocole TCP personnalisé. Voici les commande
 
 | **Commande**     | **Description**                                                             |
 |-------------------|-----------------------------------------------------------------------------|
-| `--register`      | Enregistrer un nouvel utilisateur (requiert `--username` et `--password`). |
-| `--login`         | Connecter un utilisateur existant (requiert `--username` et `--password`). |
-| `--add`           | Ajouter un mot de passe au coffre (requiert `--name` et `--password`).     |
-| `--get`           | Récupérer un mot de passe du coffre (requiert `--name`).                  |
-| `--remove`        | Supprimer un mot de passe du coffre (requiert `--name`).                  |
-| `--disconnect`    | Déconnecter l'utilisateur du serveur.                                      |
-| `--ping`          | Vérifier la connectivité avec le serveur.                                  |
-| `--quit`          | Fermer la connexion (client uniquement).                                   |
+| `REGISTER`      | Enregistrer un nouvel utilisateur (requiert `--username` et `--password`). |
+| `LOGIN`         | Connecter un utilisateur existant (requiert `--username` et `--password`). |
+| `ADD`           | Ajouter un mot de passe au coffre (requiert `--name` et `--password`) (local `--encryptionPassword`).     |
+| `GET`           | Récupérer un mot de passe du coffre (requiert `--name`) (local `--decryptionPassword`).                  |
+| `REMOVE`        | Supprimer un mot de passe du coffre (requiert `--name`).                  |
+| `DISCONNECT`    | Déconnecter l'utilisateur du serveur.                                      |
+| `PING`          | Vérifier la connectivité avec le serveur.                                  |
+| `QUIT`          | Fermer la connexion (client uniquement).                                   |
 
 ### Exemple de session client-serveur
 
