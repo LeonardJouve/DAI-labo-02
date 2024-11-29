@@ -1,12 +1,13 @@
 package ch.heigvd.dai.server;
 
 import ch.heigvd.dai.Cli;
-import ch.heigvd.dai.PassSecureException;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import picocli.CommandLine;
 
 @CommandLine.Command(name = "server", description = "Start the server part of the network game.")
@@ -19,32 +20,23 @@ public class Server implements Callable<Integer> {
       defaultValue = "6433")
   private int port;
 
+  @CommandLine.Option(
+          names = {"-t", "--thread"},
+          description = "Maximum amount of threads (default: ${DEFAULT-VALUE}).",
+          defaultValue = "5")
+  private int thread;
+
   @Override
   public Integer call() {
     State.setVault(parent.getPath());
 
-    try (ServerSocket serverSocket = new ServerSocket(port)) {
+    try (ServerSocket serverSocket = new ServerSocket(port);
+         ExecutorService executor = Executors.newFixedThreadPool(thread)) {
       System.out.println("[Server] Listening on port " + port);
 
       while (!serverSocket.isClosed()) {
-        try (Socket socket = serverSocket.accept();
-            Reader reader = new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8);
-            BufferedReader in = new BufferedReader(reader);
-            Writer writer =
-                new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8);
-            BufferedWriter out = new BufferedWriter(writer)) {
-          System.out.println(
-              "[Server] New client connected from "
-                  + socket.getInetAddress().getHostAddress()
-                  + ":"
-                  + socket.getPort());
-
-          Repl.run(socket, in, out);
-
-          System.out.println("[Server] Closing connection");
-        } catch (PassSecureException | IOException e) {
-          System.out.println("[Server] exception: " + e.getMessage());
-        }
+        Socket socket = serverSocket.accept();
+        executor.submit(new Repl(socket));
       }
     } catch (IOException e) {
       System.out.println("[Server] exception: " + e);

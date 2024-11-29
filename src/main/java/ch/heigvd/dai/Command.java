@@ -1,7 +1,5 @@
 package ch.heigvd.dai;
 
-import jdk.jshell.EvalException;
-
 import java.security.GeneralSecurityException;
 import java.util.HashMap;
 import java.util.Map;
