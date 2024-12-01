@@ -16,22 +16,66 @@
 
 ## Docker
 
-1. Lancer le serveur
+1. Pull l'image docker
+```bash
+docker pull ghcr.io/leonardjouve/pass-secure
+```
+
+
+- Lancer le serveur
 ```bash
 docker run ghcr.io/leonardjouve/pass-secure server
 ```
 
-2. Lancer le client 
+- Lancer le client 
 ```bash
 docker run -it ghcr.io/leonardjouve/pass-secure client
+```
+
+Exemple d'utilisation en local:
+
+1. Créer un réseau docker
+```bash
+docker network create pass-secure-network
+```
+
+2. Lancer le serveur
+```bash
+docker run --network pass-secure-network ghcr.io/leonardjouve/pass-secure server -d
+```
+
+3. Réccupérer l'ip du serveur
+```bash
+docker network inspect pass-secure-network
+```
+```
+[
+    {
+        "Name": "pass-secure-network",
+        ...
+        "Containers": {
+            "cd9d65afb592da4f35770d1e4012cc346d9fef442c9a577da556a5d2d658b5fe": {
+                ...
+                "IPv4Address": "172.22.0.2/16",
+                ...
+            }
+        },
+         ...
+    }
+]
+```
+
+4. Lancer le client
+```bash
+docker run --network pass-secure-network -it ghcr.io/leonardjouve/pass-secure client --host 172.22.0.2
 ```
 
 ## Installation
 
 1. Clonez le dépôt :
    ```bash
-   git clone https://github.com/your-repo/pass-secure.git
-   cd pass-secure
+   git clone https://github.com/LeonardJouve/DAI-labo-02.git
+   cd DAI-labo-02
    ```
 
 2. Compilez le projet :
@@ -41,12 +85,12 @@ docker run -it ghcr.io/leonardjouve/pass-secure client
 
 3. Lancez le serveur :
    ```bash
-   java -jar target/pass-secure-1.0.jar --path ./serverVault/ server
+   java -jar target/pass-secure-1.0.jar --path ./serverVault/ server --port 9765 --thread 5
    ```
 
 4. Lancez le client :
    ```bash
-   java -jar target/pass-secure-1.0.jar client -H localhost
+   java -jar target/pass-secure-1.0.jar client --host localhost --port 9765
    ```
 
 5. Obtenez de l'aide ou affichez la version :
@@ -71,7 +115,8 @@ L'application fonctionne avec un protocole TCP personnalisé. Voici les commande
 | `DISCONNECT`    | Déconnecter l'utilisateur du serveur.                                      |
 | `PING`          | Vérifier la connectivité avec le serveur.                                  |
 | `QUIT`          | Fermer la connexion (client uniquement).                                   |
-| `GENERATE`          | Creer un mot de passe sécurisé. (requiert `--name` et `--length`) (optionnal `--special` `--store`).                                   |
+| `GENERATE`      | Creer un mot de passe sécurisé. (requiert `--length` et `--name` si `--store` est spécifié) (optionnal `--special`, `--store`).                                   |
+| `HELP`          | Affiche un message d'aide (client uniquement) |
 
 ### Exemple de session client-serveur
 
@@ -83,17 +128,17 @@ L'application fonctionne avec un protocole TCP personnalisé. Voici les commande
 5. Déconnecter l'utilisateur
 
 #### Exemple :
-**Client** → `--register --username alice --password 1234`  
+**Client** → `REGISTER --username alice --password 1234`  
 **Serveur** → `OK`
 
-**Client** → `--add --name github --password securePass123 --encryptionPassword 1234`  
+**Client** → `ADD --name github --password securePass123 --encryptionPassword 1234`  
 **Serveur** → `OK`
 
-**Client** → `--get --name github`  
+**Client** → `GET --name github`  
 **Serveur** → `OK`  
 **Serveur** → `rFMQGZ5LWQUCpCmNjmgrHYNPZrGktjm5dxZbmNg2hfs`
 
-**Client** → `--get --name github --decryptionPassword 1234`  
+**Client** → `GET --name github --decryptionPassword 1234`  
 **Serveur** → `OK`  
 **Serveur** → `securePass123`
 
@@ -102,12 +147,11 @@ L'application fonctionne avec un protocole TCP personnalisé. Voici les commande
 
 ### Exemple de génération de mot de passe :
 **Client** → `GENERATE --name twitter --length 12 --special true --store true`  
-**Serveur** → `OK`  
-**Serveur** → `RandomPassword123!`
+**Serveur** → `OK`
 
 ## Remarques importantes
 
-- **Sécurité** : Les mots de passe sont chiffrés localement avec un mot de passe maître. Veillez à ce que ce dernier soit robuste.
+- **Sécurité** : Les mots de passe sont chiffrés localement avec un mot de passe d'encryption pour chaque entrée.
 - **Configuration** : Le serveur utilise par défaut le port `6433`. Assurez-vous qu'il est ouvert sur votre machine.
 - **Dossier par défaut** : Les coffres-forts sont sauvegardés dans le répertoire spécifié ou, par défaut, dans le répertoire courant.
 
