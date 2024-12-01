@@ -108,7 +108,7 @@ docker run --network pass-secure-network -it ghcr.io/leonardjouve/pass-secure cl
 
 L'application fonctionne avec un protocole TCP personnalisé. Voici les commandes supportées côté client :
 
-Usage : <COMMAND> --<argument> <value>
+Usage : `<COMMAND> --<argument> <value>`
 
 | **Commande**     | **Description**                                                             |
 |-------------------|-----------------------------------------------------------------------------|
