@@ -6,13 +6,18 @@
 
 **Pass-Secure** est un gestionnaire de mots de passe TCP offrant des fonctionnalités de gestion de mots de passe dans un environnement client-serveur. Il permet d'interagir avec un serveur via des commandes pour enregistrer, récupérer, stocker ou supprimer des mots de passe. Pass-Secure permet une encryption coté client des mot de passe envoyés au serveur avec un autre mot de passe, ce qui ajoute un niveau de sécurité majeur. Le serveur n'a pas connaissance des mots de passe décryptés.
 
+Les fichiers sont stockés sur le serveur selon l'arborescence suivante :
+![](file-structure.svg)
+
+Pour plus de détail sur le protocole de communication utilisé cf. [RCF](RFC.md)
+
 ## Fonctionnalités
 
 - **Enregistrement et Connexion des Utilisateurs** : Les utilisateurs peuvent créer un compte protégé par un mot de passe maître.
-- **Stockage Sécurisé** : Les mots de passe sont chiffrés et sauvegardés dans un coffre protégé.
-- **Récupération de Mots de Passe** : Permet aux utilisateurs d'accéder à leurs mots de passe stockés en utilisant le mot de passe maître.
+- **Stockage Sécurisé** : Les mots de passe sont chiffrés par le client et sauvegardés dans un coffre sur le serveur.
+- **Récupération de Mots de Passe** : Permet aux utilisateurs d'accéder à leurs mots de passe stockés.
 - **Suppression de Mots de Passe** : Les entrées inutiles peuvent être supprimées du coffre.
-- **Déconnexion et Fermeture** : Permet de mettre fin à la session de manière sécurisée.
+- **Déconnexion et Fermeture** : Permet de mettre fin à la session.
 
 ## Docker
 
@@ -41,7 +46,7 @@ docker network create pass-secure-network
 
 2. Lancer le serveur
 ```bash
-docker run --network pass-secure-network ghcr.io/leonardjouve/pass-secure server -d
+docker run --network pass-secure-network ghcr.io/leonardjouve/pass-secure server
 ```
 
 3. Réccupérer l'ip du serveur
@@ -105,18 +110,20 @@ docker run --network pass-secure-network -it ghcr.io/leonardjouve/pass-secure cl
 
 L'application fonctionne avec un protocole TCP personnalisé. Voici les commandes supportées côté client :
 
-| **Commande** | **Description**                                                                                                                 |
-|--------------|---------------------------------------------------------------------------------------------------------------------------------|
-| `REGISTER`   | Enregistrer un nouvel utilisateur (requiert `--username` et `--password`).                                                      |
-| `LOGIN`      | Connecter un utilisateur existant (requiert `--username` et `--password`).                                                      |
-| `ADD`        | Ajouter un mot de passe au coffre (requiert `--name` et `--password`) (local `--encryptionPassword`).                           |
-| `GET`        | Récupérer un mot de passe du coffre (requiert `--name`) (local `--decryptionPassword`).                                         |
-| `REMOVE`     | Supprimer un mot de passe du coffre (requiert `--name`).                                                                        |
-| `DISCONNECT` | Déconnecter l'utilisateur du serveur.                                                                                           |
-| `PING`       | Vérifier la connectivité avec le serveur.                                                                                       |
-| `QUIT`       | Fermer la connexion (client uniquement).                                                                                        |
-| `GENERATE`   | Creer un mot de passe sécurisé. (requiert `--length` et `--name` si `--store` est spécifié) (optionnal `--special`, `--store`). |
-| `HELP`       | Affiche un message d'aide (client uniquement)                                                                                   |
+Usage : `<COMMAND> --<argument> <value>`
+
+| **Commande** | **Description**                                                                                                                                                            |
+|--------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `REGISTER`   | Enregistrer un nouvel utilisateur (requiert `--username` et `--password`).                                                                                                 |
+| `LOGIN`      | Connecter un utilisateur existant (requiert `--username` et `--password`).                                                                                                 |
+| `ADD`        | Ajouter un mot de passe au coffre (requiert `--name` et `--password` et `--overwrite`) (local `--encryptionPassword`).                                                     |
+| `GET`        | Récupérer un mot de passe du coffre (requiert `--name`) (local `--decryptionPassword`).                                                                                    |
+| `REMOVE`     | Supprimer un mot de passe du coffre (requiert `--name`).                                                                                                                   |
+| `DISCONNECT` | Déconnecter l'utilisateur du serveur.                                                                                                                                      |
+| `PING`       | Vérifier la connectivité avec le serveur.                                                                                                                                  |
+| `QUIT`       | Fermer la connexion (client uniquement).                                                                                                                                   |
+| `GENERATE`   | Creer un mot de passe sécurisé. (requiert `--length` et `--name` si `--store` est spécifié) (optionnel `--special`, `--store` et `--overwrite` si `--store` est spécifié). |
+| `HELP`       | Affiche un message d'aide (client uniquement)                                                                                                                              |
 
 ### Exemple de session client-serveur
 
