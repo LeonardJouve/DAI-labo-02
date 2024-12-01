@@ -108,6 +108,8 @@ docker run --network pass-secure-network -it ghcr.io/leonardjouve/pass-secure cl
 
 L'application fonctionne avec un protocole TCP personnalisé. Voici les commandes supportées côté client :
 
+Usage : <COMMAND> --<argument> <value>
+
 | **Commande**     | **Description**                                                             |
 |-------------------|-----------------------------------------------------------------------------|
 | `REGISTER`      | Enregistrer un nouvel utilisateur (requiert `--username` et `--password`). |
@@ -118,7 +120,7 @@ L'application fonctionne avec un protocole TCP personnalisé. Voici les commande
 | `DISCONNECT`    | Déconnecter l'utilisateur du serveur.                                      |
 | `PING`          | Vérifier la connectivité avec le serveur.                                  |
 | `QUIT`          | Fermer la connexion (client uniquement).                                   |
-| `GENERATE`      | Creer un mot de passe sécurisé. (requiert `--length`, `--name` et `--overwrite` si `--store` est spécifié) (optionnal `--special`, `--store`).                                   |
+| `GENERATE`      | Creer un mot de passe sécurisé. (requiert `--length` et `--name` si `--store` est spécifié) (optionnal `--special`, `--store` et `--overwrite` si `--store` est spécifié).                                   |
 | `HELP`          | Affiche un message d'aide (client uniquement) |
 
 ### Exemple de session client-serveur
