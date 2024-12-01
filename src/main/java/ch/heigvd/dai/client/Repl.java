@@ -35,6 +35,18 @@ public class Repl {
   }
 
   public static void run(BufferedReader keyboardIn, BufferedReader socketIn, BufferedWriter socketOut) throws IOException {
+    System.out.println(
+            """
+            ██████╗  █████╗ ███████╗███████╗      ███████╗███████╗ ██████╗██╗   ██╗██████╗ ███████╗
+            ██╔══██╗██╔══██╗██╔════╝██╔════╝      ██╔════╝██╔════╝██╔════╝██║   ██║██╔══██╗██╔════╝
+            ██████╔╝███████║███████╗███████╗█████╗███████╗█████╗  ██║     ██║   ██║██████╔╝█████╗
+            ██╔═══╝ ██╔══██║╚════██║╚════██║╚════╝╚════██║██╔══╝  ██║     ██║   ██║██╔══██╗██╔══╝
+            ██║     ██║  ██║███████║███████║      ███████║███████╗╚██████╗╚██████╔╝██║  ██║███████╗
+            ╚═╝     ╚═╝  ╚═╝╚══════╝╚══════╝      ╚══════╝╚══════╝ ╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝
+            
+            Type "HELP" to get a list of commands
+            """);
+
     boolean quit = false;
     while (!quit) {
       String line = keyboardIn.readLine();
