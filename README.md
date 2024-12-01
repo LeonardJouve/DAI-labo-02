@@ -105,18 +105,18 @@ docker run --network pass-secure-network -it ghcr.io/leonardjouve/pass-secure cl
 
 L'application fonctionne avec un protocole TCP personnalisé. Voici les commandes supportées côté client :
 
-| **Commande**     | **Description**                                                             |
-|-------------------|-----------------------------------------------------------------------------|
-| `REGISTER`      | Enregistrer un nouvel utilisateur (requiert `--username` et `--password`). |
-| `LOGIN`         | Connecter un utilisateur existant (requiert `--username` et `--password`). |
-| `ADD`           | Ajouter un mot de passe au coffre (requiert `--name` et `--password`) (local `--encryptionPassword`).     |
-| `GET`           | Récupérer un mot de passe du coffre (requiert `--name`) (local `--decryptionPassword`).                  |
-| `REMOVE`        | Supprimer un mot de passe du coffre (requiert `--name`).                  |
-| `DISCONNECT`    | Déconnecter l'utilisateur du serveur.                                      |
-| `PING`          | Vérifier la connectivité avec le serveur.                                  |
-| `QUIT`          | Fermer la connexion (client uniquement).                                   |
-| `GENERATE`      | Creer un mot de passe sécurisé. (requiert `--length` et `--name` si `--store` est spécifié) (optionnal `--special`, `--store`).                                   |
-| `HELP`          | Affiche un message d'aide (client uniquement) |
+| **Commande** | **Description**                                                                                                                 |
+|--------------|---------------------------------------------------------------------------------------------------------------------------------|
+| `REGISTER`   | Enregistrer un nouvel utilisateur (requiert `--username` et `--password`).                                                      |
+| `LOGIN`      | Connecter un utilisateur existant (requiert `--username` et `--password`).                                                      |
+| `ADD`        | Ajouter un mot de passe au coffre (requiert `--name` et `--password`) (local `--encryptionPassword`).                           |
+| `GET`        | Récupérer un mot de passe du coffre (requiert `--name`) (local `--decryptionPassword`).                                         |
+| `REMOVE`     | Supprimer un mot de passe du coffre (requiert `--name`).                                                                        |
+| `DISCONNECT` | Déconnecter l'utilisateur du serveur.                                                                                           |
+| `PING`       | Vérifier la connectivité avec le serveur.                                                                                       |
+| `QUIT`       | Fermer la connexion (client uniquement).                                                                                        |
+| `GENERATE`   | Creer un mot de passe sécurisé. (requiert `--length` et `--name` si `--store` est spécifié) (optionnal `--special`, `--store`). |
+| `HELP`       | Affiche un message d'aide (client uniquement)                                                                                   |
 
 ### Exemple de session client-serveur
 
