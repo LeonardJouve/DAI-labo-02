@@ -1,7 +1,7 @@
 # Pass-Secure
 
 <p align="center">
-<img align="center" src="https://github.com/LeonardJouve/DAI-labo01/blob/Add-logo-readme/logo-pass-secure.png" alt="drawing" style="width:200px;" class="center"/>
+<img align="center" src="logo-pass-secure.png" alt="drawing" style="width:200px;" class="center"/>
 </p>
 
 **Pass-Secure** est un gestionnaire de mots de passe TCP offrant des fonctionnalités de gestion de mots de passe dans un environnement client-serveur. Il permet d'interagir avec un serveur via des commandes pour enregistrer, récupérer, stocker ou supprimer des mots de passe.
