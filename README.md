@@ -44,7 +44,7 @@ docker network create pass-secure-network
 
 2. Lancer le serveur
 ```bash
-docker run --network pass-secure-network ghcr.io/leonardjouve/pass-secure server -d
+docker run --network pass-secure-network ghcr.io/leonardjouve/pass-secure server
 ```
 
 3. Réccupérer l'ip du serveur
