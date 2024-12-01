@@ -14,7 +14,6 @@ package ch.heigvd.dai;
 
 import ch.heigvd.dai.client.Client;
 import ch.heigvd.dai.server.Server;
-import java.nio.file.Path;
 import picocli.CommandLine;
 
 /**
@@ -39,7 +38,8 @@ import picocli.CommandLine;
  */
 
 @CommandLine.Command(
-    description = "A small game to experiment with TCP.",
+    name = "Pass-Secure",
+    description = "Pass-Secure is a Password Manager allowing you to generate, store and retrieve passwords",
     version = "1.0.0",
     subcommands = {
       Client.class,
@@ -47,24 +47,4 @@ import picocli.CommandLine;
     },
     scope = CommandLine.ScopeType.INHERIT,
     mixinStandardHelpOptions = true)
-public class Cli {
-  /**
-   * The path to the vault where the passwords are stored. If not specified, it defaults to the
-   * current directory.
-   */
-  @CommandLine.Option(
-      names = {"-p", "--path"},
-      description = "Path of the vault used to store and retrieve passwords.",
-      required = false,
-      defaultValue = "./")
-  private String path;
-
-  /**
-   * Retrieves the vault path as a Path object.
-   *
-   * @return The Path representing the location of the vault.
-   */
-  public Path getPath() {
-    return Path.of(path);
-  }
-}
+public class Cli {}
