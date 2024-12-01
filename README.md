@@ -146,7 +146,8 @@ L'application fonctionne avec un protocole TCP personnalisé. Voici les commande
 **Serveur** → `OK`
 
 ### Exemple de génération de mot de passe :
-**Client** → `GENERATE --name twitter --length 12 --special true --store true`  
+**Client** → `GENERATE --name twitter --length 12 --special true --store true`
+**Client** → `rFMQ$Z5*WQ-C`
 **Serveur** → `OK`
 
 ## Remarques importantes
