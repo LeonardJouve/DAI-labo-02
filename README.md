@@ -85,6 +85,7 @@ docker run --network pass-secure-network -it ghcr.io/leonardjouve/pass-secure cl
 
 2. Compilez le projet :
    ```bash
+   chmod +x ./mvnw
    ./mvnw spotless:apply spotless:check dependency:go-offline clean compile package
    ```
 
