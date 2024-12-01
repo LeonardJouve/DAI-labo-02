@@ -4,7 +4,7 @@
 <img align="center" src="logo-pass-secure.png" alt="drawing" style="width:200px;" class="center"/>
 </p>
 
-**Pass-Secure** est un gestionnaire de mots de passe TCP offrant des fonctionnalités de gestion de mots de passe dans un environnement client-serveur. Il permet d'interagir avec un serveur via des commandes pour enregistrer, récupérer, stocker ou supprimer des mots de passe.
+**Pass-Secure** est un gestionnaire de mots de passe TCP offrant des fonctionnalités de gestion de mots de passe dans un environnement client-serveur. Il permet d'interagir avec un serveur via des commandes pour enregistrer, récupérer, stocker ou supprimer des mots de passe. Pass-Secure permet une encryption coté client des mot de passe envoyés au serveur avec un autre mot de passe, ce qui ajoute un niveau de sécurité majeur. Le serveur n'a pas connaissance des mots de passe décryptés.
 
 ## Fonctionnalités
 
