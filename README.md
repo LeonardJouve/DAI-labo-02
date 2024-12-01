@@ -9,6 +9,8 @@
 Les fichiers sont stockés sur le serveur selon l'arborescence suivante :
 ![](file-structure.svg)
 
+Pour plus de détail sur le protocole de communication utilisé cf. [RCF](RFC.md)
+
 ## Fonctionnalités
 
 - **Enregistrement et Connexion des Utilisateurs** : Les utilisateurs peuvent créer un compte protégé par un mot de passe maître.
