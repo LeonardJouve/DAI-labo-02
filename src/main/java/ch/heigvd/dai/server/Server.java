@@ -16,19 +16,19 @@ public class Server implements Callable<Integer> {
    * current directory.
    */
   @CommandLine.Option(
-          names = {"-p", "--path"},
-          description = "Path of the vault used to store and retrieve passwords.",
-          required = false,
-          defaultValue = "./")
-  private String path;
+      names = {"-v", "--vault"},
+      description = "Path of the vault used to store and retrieve passwords.",
+      required = false,
+      defaultValue = "./")
+  private String vault;
 
   /**
    * Retrieves the vault path as a Path object.
    *
    * @return The Path representing the location of the vault.
    */
-  private Path getPath() {
-    return Path.of(path);
+  private Path getVault() {
+    return Path.of(vault);
   }
 
   @CommandLine.Option(
@@ -45,7 +45,7 @@ public class Server implements Callable<Integer> {
 
   @Override
   public Integer call() {
-    State.setVault(getPath());
+    State.setVault(getVault());
 
     try (ServerSocket serverSocket = new ServerSocket(port);
         ExecutorService executor = Executors.newFixedThreadPool(thread)) {
