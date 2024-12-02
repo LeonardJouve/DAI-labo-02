@@ -134,7 +134,7 @@ Usage : `<COMMAND> --<argument> <value>`
 |--------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `REGISTER`   | Enregistrer un nouvel utilisateur (requiert `--username` et `--password`).                                                                                                 |
 | `LOGIN`      | Connecter un utilisateur existant (requiert `--username` et `--password`).                                                                                                 |
-| `ADD`        | Ajouter un mot de passe au coffre (requiert `--name` et `--password` et `--overwrite`) (local `--encryptionPassword`).                                                     |
+| `ADD`        | Ajouter un mot de passe au coffre (requiert `--name` et `--password`) (local `--encryptionPassword`) (optionnel  `--overwrite`).                                                     |
 | `GET`        | Récupérer un mot de passe du coffre (requiert `--name`) (local `--decryptionPassword`).                                                                                    |
 | `REMOVE`     | Supprimer un mot de passe du coffre (requiert `--name`).                                                                                                                   |
 | `DISCONNECT` | Déconnecter l'utilisateur du serveur.                                                                                                                                      |
