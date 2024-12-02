@@ -19,7 +19,8 @@ public class PassSecureException extends Exception {
     CIPHER_ERROR("cipher_error"),
     INVALID_COMMAND("invalid_command"),
     ENTRY_ALREADY_EXISTS("entry_already_exists"),
-    ENTRY_NOT_FOUND("entry_not_found"),;
+    ENTRY_NOT_FOUND("entry_not_found"),
+    ;
 
     private final String type;
 

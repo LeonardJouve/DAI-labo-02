@@ -3,7 +3,6 @@ package ch.heigvd.dai.server;
 import ch.heigvd.dai.Command;
 import ch.heigvd.dai.PassSecureException;
 import ch.heigvd.dai.server.commands.*;
-
 import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
@@ -11,6 +10,7 @@ import java.util.HashMap;
 
 public class Repl implements Runnable {
   private final Socket socket;
+
   public Repl(Socket socket) {
     this.socket = socket;
   }
@@ -28,15 +28,15 @@ public class Repl implements Runnable {
   @Override
   public void run() {
     System.out.println(
-            "[Server] New client connected from "
-                    + socket.getInetAddress().getHostAddress()
-                    + ":"
-                    + socket.getPort());
+        "[Server] New client connected from "
+            + socket.getInetAddress().getHostAddress()
+            + ":"
+            + socket.getPort());
     try (socket;
-         Reader reader = new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8);
-         BufferedReader socketIn = new BufferedReader(reader);
-         Writer writer = new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8);
-         BufferedWriter socketOut = new BufferedWriter(writer)) {
+        Reader reader = new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8);
+        BufferedReader socketIn = new BufferedReader(reader);
+        Writer writer = new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8);
+        BufferedWriter socketOut = new BufferedWriter(writer)) {
 
       State state = new State();
 

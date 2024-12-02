@@ -1,5 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Package application as a JAR file" type="MavenRunConfiguration" factoryName="Maven">
+    <target name="@@@LOCAL@@@" />
     <MavenSettings>
       <option name="myGeneralSettings">
         <MavenGeneralSettings>

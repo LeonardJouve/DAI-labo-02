@@ -4,7 +4,6 @@ import ch.heigvd.dai.Command;
 import ch.heigvd.dai.PassSecureException;
 import ch.heigvd.dai.client.commands.Generate;
 import ch.heigvd.dai.client.commands.Help;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -34,16 +33,18 @@ public class Repl {
     return command.getType() == Command.Type.OK;
   }
 
-  public static void run(BufferedReader keyboardIn, BufferedReader socketIn, BufferedWriter socketOut) throws IOException {
+  public static void run(
+      BufferedReader keyboardIn, BufferedReader socketIn, BufferedWriter socketOut)
+      throws IOException {
     System.out.println(
-            """
+        """
             ██████╗  █████╗ ███████╗███████╗      ███████╗███████╗ ██████╗██╗   ██╗██████╗ ███████╗
             ██╔══██╗██╔══██╗██╔════╝██╔════╝      ██╔════╝██╔════╝██╔════╝██║   ██║██╔══██╗██╔════╝
             ██████╔╝███████║███████╗███████╗█████╗███████╗█████╗  ██║     ██║   ██║██████╔╝█████╗
             ██╔═══╝ ██╔══██║╚════██║╚════██║╚════╝╚════██║██╔══╝  ██║     ██║   ██║██╔══██╗██╔══╝
             ██║     ██║  ██║███████║███████║      ███████║███████╗╚██████╗╚██████╔╝██║  ██║███████╗
             ╚═╝     ╚═╝  ╚═╝╚══════╝╚══════╝      ╚══════╝╚══════╝ ╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝
-            
+
             Type "HELP" to get a list of commands
             """);
 
@@ -60,25 +61,31 @@ public class Repl {
             sendCommand(socketIn, socketOut, command);
             System.out.println("PONG");
             break;
-          case Command.Type.REGISTER, Command.Type.LOGIN, Command.Type.DISCONNECT, Command.Type.ADD, Command.Type.REMOVE:
+          case Command.Type.REGISTER,
+              Command.Type.LOGIN,
+              Command.Type.DISCONNECT,
+              Command.Type.ADD,
+              Command.Type.REMOVE:
             sendCommand(socketIn, socketOut, command);
             break;
-          case Command.Type.GET: {
-            sendCommand(socketIn, socketOut, command);
-            String password = command.decrypt(socketIn.readLine());
-            System.out.println("Password : " + password);
-            break;
-          }
-          case Command.Type.GENERATE: {
-            String password = Generate.generate(command);
-            System.out.println("Password : " + password);
-            if (command.getBoolean("store")) {
-              HashMap<String, String> arguments = command.getArguments();
-              arguments.put("password", password);
-              sendCommand(socketIn, socketOut, new Command(Command.Type.ADD, arguments));
+          case Command.Type.GET:
+            {
+              sendCommand(socketIn, socketOut, command);
+              String password = command.decrypt(socketIn.readLine());
+              System.out.println("Password : " + password);
+              break;
             }
-            break;
-          }
+          case Command.Type.GENERATE:
+            {
+              String password = Generate.generate(command);
+              System.out.println("Password : " + password);
+              if (command.getBoolean("store")) {
+                HashMap<String, String> arguments = command.getArguments();
+                arguments.put("password", password);
+                sendCommand(socketIn, socketOut, new Command(Command.Type.ADD, arguments));
+              }
+              break;
+            }
           case Command.Type.HELP:
             Help.help();
             break;

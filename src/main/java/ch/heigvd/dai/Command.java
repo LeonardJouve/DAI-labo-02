@@ -5,9 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Command {
-  private final static String ENCRYPTION_PASSWORD_ARGUMENT = "encryptionPassword";
-  private final static String DECRYPTION_PASSWORD_ARGUMENT = "decryptionPassword";
-  private final static String PASSWORD_ARGUMENT = "password";
+  private static final String ENCRYPTION_PASSWORD_ARGUMENT = "encryptionPassword";
+  private static final String DECRYPTION_PASSWORD_ARGUMENT = "decryptionPassword";
+  private static final String PASSWORD_ARGUMENT = "password";
 
   private final Type type;
   private final HashMap<String, String> arguments;
@@ -53,7 +53,8 @@ public class Command {
 
   public static Command parse(String command) throws PassSecureException {
     String[] tokens = command.split(" ");
-    if (tokens.length == 0) throw new PassSecureException(PassSecureException.Type.INVALID_ARGUMENT);
+    if (tokens.length == 0)
+      throw new PassSecureException(PassSecureException.Type.INVALID_ARGUMENT);
 
     Type type;
     try {
@@ -80,7 +81,8 @@ public class Command {
   }
 
   public void encrypt() throws PassSecureException {
-    if (!arguments.containsKey(ENCRYPTION_PASSWORD_ARGUMENT) || !arguments.containsKey(PASSWORD_ARGUMENT)) return;
+    if (!arguments.containsKey(ENCRYPTION_PASSWORD_ARGUMENT)
+        || !arguments.containsKey(PASSWORD_ARGUMENT)) return;
 
     String encryptionPassword = arguments.get(ENCRYPTION_PASSWORD_ARGUMENT);
     String password = arguments.get(PASSWORD_ARGUMENT);
@@ -140,7 +142,8 @@ public class Command {
     StringBuilder sb = new StringBuilder();
     sb.append(type);
     for (Map.Entry<String, String> entry : arguments.entrySet()) {
-      if (entry.getKey().equals(ENCRYPTION_PASSWORD_ARGUMENT) || entry.getKey().equals(DECRYPTION_PASSWORD_ARGUMENT)) continue;
+      if (entry.getKey().equals(ENCRYPTION_PASSWORD_ARGUMENT)
+          || entry.getKey().equals(DECRYPTION_PASSWORD_ARGUMENT)) continue;
 
       sb.append(" --");
       sb.append(entry.getKey());

@@ -1,8 +1,8 @@
 package ch.heigvd.dai.server;
 
 import ch.heigvd.dai.Cipher;
-import ch.heigvd.dai.PassSecureException;
 import ch.heigvd.dai.File;
+import ch.heigvd.dai.PassSecureException;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.security.GeneralSecurityException;
@@ -28,8 +28,10 @@ public class State {
     return vaultPath.resolve(username);
   }
 
-  private static void checkForPathTraversal(Path origin, Path destination) throws PassSecureException {
-    if (!destination.toAbsolutePath().normalize().startsWith(origin.toAbsolutePath().normalize())) throw new PassSecureException(PassSecureException.Type.UNAUTHORIZED);
+  private static void checkForPathTraversal(Path origin, Path destination)
+      throws PassSecureException {
+    if (!destination.toAbsolutePath().normalize().startsWith(origin.toAbsolutePath().normalize()))
+      throw new PassSecureException(PassSecureException.Type.UNAUTHORIZED);
   }
 
   public String getVaultEntry(String name) throws PassSecureException {
@@ -61,7 +63,8 @@ public class State {
     }
   }
 
-  public void addVaultEntry(String name, String password, boolean overwrite) throws PassSecureException {
+  public void addVaultEntry(String name, String password, boolean overwrite)
+      throws PassSecureException {
     Path entry = getUserVault().resolve(name + ENTRY_EXTENSION);
     checkForPathTraversal(getUserVault(), entry);
 

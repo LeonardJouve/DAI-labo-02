@@ -5,15 +5,15 @@ import ch.heigvd.dai.PassSecureException;
 import ch.heigvd.dai.server.State;
 
 public class Get {
-    public static String get(State state, Command command) throws PassSecureException {
-        if (state == null || command == null || command.getType() != Command.Type.GET)
-            throw new PassSecureException(PassSecureException.Type.INVALID_ARGUMENT);
+  public static String get(State state, Command command) throws PassSecureException {
+    if (state == null || command == null || command.getType() != Command.Type.GET)
+      throw new PassSecureException(PassSecureException.Type.INVALID_ARGUMENT);
 
-        String name = command.getString("name");
+    String name = command.getString("name");
 
-        if (name == null || name.isEmpty())
-            throw new PassSecureException(PassSecureException.Type.INVALID_ARGUMENT);
+    if (name == null || name.isEmpty())
+      throw new PassSecureException(PassSecureException.Type.INVALID_ARGUMENT);
 
-        return state.getVaultEntry(name);
-    }
+    return state.getVaultEntry(name);
+  }
 }
