@@ -6,7 +6,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.concurrent.Callable;
 import picocli.CommandLine;
 
-@CommandLine.Command(name = "client", description = "Start the client part of the network game.")
+@CommandLine.Command(name = "client", description = "Start the client part of pass-secure.")
 public class Client implements Callable<Integer> {
 
   @CommandLine.Option(

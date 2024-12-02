@@ -91,7 +91,7 @@ docker run --network pass-secure-network -it ghcr.io/leonardjouve/pass-secure cl
 
 3. Lancez le serveur :
    ```bash
-   java -jar target/pass-secure-1.0.jar --path ./serverVault/ server --port 9765 --thread 5
+   java -jar target/pass-secure-1.0.jar server --path ./serverVault/ --port 9765 --thread 5
    ```
 
 4. Lancez le client :
