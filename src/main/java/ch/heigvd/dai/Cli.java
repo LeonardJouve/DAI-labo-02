@@ -39,7 +39,8 @@ import picocli.CommandLine;
 
 @CommandLine.Command(
     name = "Pass-Secure",
-    description = "Pass-Secure is a Password Manager allowing you to generate, store and retrieve passwords",
+    description =
+        "Pass-Secure is a Password Manager allowing you to generate, store and retrieve passwords",
     version = "1.0.0",
     subcommands = {
       Client.class,

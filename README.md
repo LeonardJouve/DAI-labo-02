@@ -28,7 +28,7 @@ docker pull ghcr.io/leonardjouve/pass-secure
 
 - Lancer le serveur
 ```bash
-docker run -p <port>:6433 ghcr.io/leonardjouve/pass-secure server --path <vault> --thread <amount>
+docker run -p <port>:6433 ghcr.io/leonardjouve/pass-secure server --vault <vault> --thread <amount>
 ```
 
 - Lancer le client 
@@ -108,7 +108,7 @@ docker pull ghcr.io/<username>/pass-secure
 
 3. Lancez le serveur :
    ```bash
-   java -jar target/pass-secure-1.0.jar server --path ./serverVault/ --port 9765 --thread 5
+   java -jar target/pass-secure-1.0.jar server --vault ./serverVault/ --port 9765 --thread 5
    ```
 
 4. Lancez le client :
