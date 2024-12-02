@@ -26,53 +26,70 @@ Pour plus de détail sur le protocole de communication utilisé cf. [RCF](RFC.md
 docker pull ghcr.io/leonardjouve/pass-secure
 ```
 
-
 - Lancer le serveur
 ```bash
-docker run ghcr.io/leonardjouve/pass-secure server
+docker run -p <port>:6433 ghcr.io/leonardjouve/pass-secure server --path <vault> --thread <amount>
 ```
 
 - Lancer le client 
 ```bash
-docker run -it ghcr.io/leonardjouve/pass-secure client
+docker run -it ghcr.io/leonardjouve/pass-secure client --host <host> --port <port>
 ```
 
-Exemple d'utilisation en local:
+### Exemple d'utilisation en local:
 
-1. Créer un réseau docker
+- Lancer le serveur
 ```bash
-docker network create pass-secure-network
+docker run -p 6433:6433 ghcr.io/leonardjouve/pass-secure server
 ```
 
-2. Lancer le serveur
+- Réccupérer son ip locale
 ```bash
-docker run --network pass-secure-network ghcr.io/leonardjouve/pass-secure server
+ifconfig
 ```
 
-3. Réccupérer l'ip du serveur
-```bash
-docker network inspect pass-secure-network
 ```
-```
-[
-    {
-        "Name": "pass-secure-network",
+eth0:   ...
+        inet 172.25.198.170  ...
         ...
-        "Containers": {
-            "cd9d65afb592da4f35770d1e4012cc346d9fef442c9a577da556a5d2d658b5fe": {
-                ...
-                "IPv4Address": "172.22.0.2/16",
-                ...
-            }
-        },
-         ...
-    }
-]
 ```
 
-4. Lancer le client
+- Lancer le client
 ```bash
-docker run --network pass-secure-network -it ghcr.io/leonardjouve/pass-secure client --host 172.22.0.2
+docker run -it ghcr.io/leonardjouve/pass-secure client --host 172.25.198.170
+```
+
+### Publier sa propre image docker
+
+1. Compilez le projet :
+```bash
+chmod +x ./mvnw
+./mvnw spotless:apply spotless:check dependency:go-offline clean compile package
+```
+
+2. Créer une image docker
+```bash
+docker build -t pass-secure .
+```
+
+3. Connexion à la Github Container Registry
+```bash
+docker login ghcr.io -u <username>
+```
+
+4. Tag l'image
+```bash
+docker tag pass-secure ghcr.io/<username>/pass-secure:latest
+```
+
+5. Publier l'image
+```bash
+docker push ghcr.io/<username>/pass-secure
+```
+
+L'image docker créée peut ensuite être réccupérée par la commande
+```bash
+docker pull ghcr.io/<username>/pass-secure
 ```
 
 ## Installation
