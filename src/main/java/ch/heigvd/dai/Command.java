@@ -1,3 +1,7 @@
+/**
+ * The {@code Command} class represents a command sent between the client and server in the
+ * pass-secure system. It supports parsing, encryption, decryption, and retrieval of arguments.
+ */
 package ch.heigvd.dai;
 
 import java.security.GeneralSecurityException;
@@ -5,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Command {
+
   private static final String ENCRYPTION_PASSWORD_ARGUMENT = "encryptionPassword";
   private static final String DECRYPTION_PASSWORD_ARGUMENT = "decryptionPassword";
   private static final String PASSWORD_ARGUMENT = "password";
@@ -12,15 +17,27 @@ public class Command {
   private final Type type;
   private final HashMap<String, String> arguments;
 
+  /**
+   * Constructs a new {@code Command} with the specified type and an empty argument map.
+   *
+   * @param type The {@link Type} of the command.
+   */
   public Command(Type type) {
     this(type, new HashMap<>());
   }
 
+  /**
+   * Constructs a new {@code Command} with the specified type and argument map.
+   *
+   * @param type The {@link Type} of the command.
+   * @param arguments A map of arguments associated with the command.
+   */
   public Command(Type type, HashMap<String, String> arguments) {
     this.type = type;
     this.arguments = arguments;
   }
 
+  /** Represents the different types of commands supported. */
   public enum Type {
     PING("PING"),
     REGISTER("REGISTER"),
@@ -45,12 +62,15 @@ public class Command {
     public String toString() {
       return type;
     }
-  };
-
-  private static boolean isArgumentNameToken(String token) {
-    return token.startsWith("--");
   }
 
+  /**
+   * Parses a command string and returns the corresponding {@code Command} object.
+   *
+   * @param command The string representation of the command.
+   * @return The parsed {@code Command}.
+   * @throws PassSecureException If the command is invalid or cannot be parsed.
+   */
   public static Command parse(String command) throws PassSecureException {
     String[] tokens = command.split(" ");
     if (tokens.length == 0)
@@ -80,6 +100,11 @@ public class Command {
     return new Command(type, arguments);
   }
 
+  /**
+   * Encrypts the password argument if present, using the provided encryption password.
+   *
+   * @throws PassSecureException If encryption fails or required arguments are missing.
+   */
   public void encrypt() throws PassSecureException {
     if (!arguments.containsKey(ENCRYPTION_PASSWORD_ARGUMENT)
         || !arguments.containsKey(PASSWORD_ARGUMENT)) return;
@@ -95,6 +120,13 @@ public class Command {
     }
   }
 
+  /**
+   * Decrypts the provided password using the decryption password argument, if present.
+   *
+   * @param password The encrypted password to decrypt.
+   * @return The decrypted password.
+   * @throws PassSecureException If decryption fails or required arguments are missing.
+   */
   public String decrypt(String password) throws PassSecureException {
     if (!arguments.containsKey(DECRYPTION_PASSWORD_ARGUMENT)) return password;
 
@@ -107,6 +139,12 @@ public class Command {
     }
   }
 
+  /**
+   * Retrieves an integer argument by name. Returns 0 if the argument is missing or invalid.
+   *
+   * @param name The name of the argument.
+   * @return The integer value of the argument, or 0 if not found or invalid.
+   */
   public int getInt(String name) {
     String value = arguments.get(name);
     if (value == null) return 0;
@@ -118,6 +156,12 @@ public class Command {
     }
   }
 
+  /**
+   * Retrieves a boolean argument by name. Returns false if the argument is missing or invalid.
+   *
+   * @param name The name of the argument.
+   * @return The boolean value of the argument, or false if not found or invalid.
+   */
   public boolean getBoolean(String name) {
     String value = arguments.get(name);
     if (value == null) return false;
@@ -125,18 +169,39 @@ public class Command {
     return Boolean.parseBoolean(value);
   }
 
+  /**
+   * Retrieves a string argument by name.
+   *
+   * @param name The name of the argument.
+   * @return The value of the argument, or null if not found.
+   */
   public String getString(String name) {
     return arguments.get(name);
   }
 
+  /**
+   * Gets the type of the command.
+   *
+   * @return The {@link Type} of the command.
+   */
   public Type getType() {
     return type;
   }
 
+  /**
+   * Gets all the arguments of the command.
+   *
+   * @return A {@link HashMap} containing the arguments.
+   */
   public HashMap<String, String> getArguments() {
     return arguments;
   }
 
+  /**
+   * Converts the command to a string representation.
+   *
+   * @return A string representation of the command.
+   */
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -152,5 +217,15 @@ public class Command {
     }
 
     return sb.toString();
+  }
+
+  /**
+   * Checks if a token represents an argument name.
+   *
+   * @param token The token to check.
+   * @return True if the token starts with "--", otherwise false.
+   */
+  private static boolean isArgumentNameToken(String token) {
+    return token.startsWith("--");
   }
 }

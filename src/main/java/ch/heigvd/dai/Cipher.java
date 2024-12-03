@@ -1,3 +1,8 @@
+/**
+ * The {@code Cipher} class provides utility methods for encrypting, decrypting, and hashing strings
+ * using secure algorithms. It is designed for use in the pass-secure system to handle sensitive
+ * data.
+ */
 package ch.heigvd.dai;
 
 import java.nio.charset.StandardCharsets;
@@ -9,17 +14,21 @@ import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.PBEParameterSpec;
 
 public class Cipher {
+
   private static final byte[] SALT = {
-    (byte) 0xc9,
-    (byte) 0x36,
-    (byte) 0x78,
-    (byte) 0x99,
-    (byte) 0x52,
-    (byte) 0x3e,
-    (byte) 0xea,
-    (byte) 0xf2
+    (byte) 0xc9, (byte) 0x36, (byte) 0x78, (byte) 0x99,
+    (byte) 0x52, (byte) 0x3e, (byte) 0xea, (byte) 0xf2
   };
 
+  /**
+   * Initializes a cipher for encryption or decryption using password-based encryption (PBE).
+   *
+   * @param password The password used to derive the encryption key.
+   * @param opmode The cipher operation mode (e.g., {@code Cipher.ENCRYPT_MODE}).
+   * @param ivParameterSpec The initialization vector (IV) specification.
+   * @return The initialized {@link javax.crypto.Cipher} object.
+   * @throws GeneralSecurityException If an error occurs during initialization.
+   */
   private static javax.crypto.Cipher initPBECipher(
       String password, int opmode, IvParameterSpec ivParameterSpec)
       throws GeneralSecurityException {
@@ -32,6 +41,15 @@ public class Cipher {
     return cipher;
   }
 
+  /**
+   * Decrypts a Base64-encoded, encrypted string using the provided password.
+   *
+   * @param content The encrypted content to decrypt, encoded in Base64.
+   * @param password The password used for decryption.
+   * @return The decrypted content as a plain text string.
+   * @throws IllegalArgumentException If the provided content is invalid.
+   * @throws GeneralSecurityException If a security error occurs during decryption.
+   */
   public static String decrypt(String content, String password)
       throws IllegalArgumentException, GeneralSecurityException {
     byte[] combined = Base64.getDecoder().decode(content);
@@ -50,6 +68,15 @@ public class Cipher {
     return new String(decryptedBytes, StandardCharsets.UTF_8);
   }
 
+  /**
+   * Encrypts a string using the provided password and returns the result as a Base64-encoded
+   * string.
+   *
+   * @param content The plain text content to encrypt.
+   * @param password The password used for encryption.
+   * @return The encrypted content, encoded in Base64.
+   * @throws GeneralSecurityException If a security error occurs during encryption.
+   */
   public static String encrypt(String content, String password) throws GeneralSecurityException {
     byte[] iv = new byte[16];
     SecureRandom secureRandom = new SecureRandom();
@@ -66,6 +93,13 @@ public class Cipher {
     return Base64.getEncoder().encodeToString(combined);
   }
 
+  /**
+   * Hashes a string using SHA-512 and a predefined salt value.
+   *
+   * @param toHash The string to hash.
+   * @return The hashed string.
+   * @throws GeneralSecurityException If a security error occurs during hashing.
+   */
   public static String hash(String toHash) throws GeneralSecurityException {
     MessageDigest md = MessageDigest.getInstance("SHA-512");
     md.update(SALT);

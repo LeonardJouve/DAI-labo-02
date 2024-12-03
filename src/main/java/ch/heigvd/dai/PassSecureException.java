@@ -1,12 +1,23 @@
+/**
+ * The {@code PassSecureException} class represents exceptions specific to the pass-secure system.
+ * It encapsulates various error types and provides descriptive error messages.
+ */
 package ch.heigvd.dai;
 
 public class PassSecureException extends Exception {
+
   private final Type type;
 
+  /**
+   * Constructs a new {@code PassSecureException} with the specified type.
+   *
+   * @param type The {@link Type} of the exception.
+   */
   public PassSecureException(Type type) {
     this.type = type;
   }
 
+  /** Represents the different types of exceptions that can occur in the pass-secure system. */
   public enum Type {
     BAD_RESPONSE("bad_response"),
     INVALID_ARGUMENT("invalid_argument"),
@@ -19,8 +30,7 @@ public class PassSecureException extends Exception {
     CIPHER_ERROR("cipher_error"),
     INVALID_COMMAND("invalid_command"),
     ENTRY_ALREADY_EXISTS("entry_already_exists"),
-    ENTRY_NOT_FOUND("entry_not_found"),
-    ;
+    ENTRY_NOT_FOUND("entry_not_found");
 
     private final String type;
 
@@ -28,12 +38,22 @@ public class PassSecureException extends Exception {
       this.type = value;
     }
 
+    /**
+     * Returns a string representation of the exception type.
+     *
+     * @return The string representation of the exception type.
+     */
     @Override
     public String toString() {
       return this.type;
     }
   }
 
+  /**
+   * Returns a descriptive message for the exception.
+   *
+   * @return The message associated with the exception type.
+   */
   @Override
   public String getMessage() {
     return type.toString();
