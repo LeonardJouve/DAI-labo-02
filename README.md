@@ -9,7 +9,7 @@
 Les fichiers sont stockés sur le serveur selon l'arborescence suivante :
 ![](file-structure.svg)
 
-Pour plus de détail sur le protocole de communication utilisé cf. [RCF](RFC.md)
+Pour plus de détail sur le protocole de communication utilisé cf. [RFC](RFC.md)
 
 ## Fonctionnalités
 
