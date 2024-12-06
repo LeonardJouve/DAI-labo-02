@@ -175,6 +175,8 @@ Usage : `<COMMAND> --<argument> <value>`
 **Client** → `rFMQ$Z5*WQ-C`
 **Serveur** → `OK`
 
+![](diagramme_sequence.svg)
+
 ## Remarques importantes
 
 - **Sécurité** : Les mots de passe sont chiffrés localement avec un mot de passe d'encryption pour chaque entrée.
