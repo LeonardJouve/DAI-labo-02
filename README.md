@@ -167,7 +167,7 @@ Usage : `<COMMAND> --<argument> <value>`
 **Serveur** → `OK`  
 **Serveur** → `securePass123`
 
-**Client** → `--disconnect`  
+**Client** → `DISCONNECT`  
 **Serveur** → `OK`
 
 ### Exemple de génération de mot de passe :
